@@ -1,11 +1,13 @@
-# Home Assistant Integration for IRSAP HRD VMC (Dixell iPro.GENIUS)
+# IRSAP HRD VMC - Home Assistant Integration
 
-[![HACS Custom](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/hacs/default)
-[![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2023.1.0%2B-blue.svg)](https://www.home-assistant.io/)
-[![Language: English](https://img.shields.io/badge/Docs-English-blue.svg)](README.md)
-[![Language: Italian](https://img.shields.io/badge/Docs-Italiano-green.svg)](README.it.md)
+[![hacs_badge](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/default)
+[![GitHub Release](https://img.shields.io/github/v/release/evlas/VMC-IRSAP?color=blue&style=flat-square)](https://github.com/evlas/VMC-IRSAP/releases)
+[![Hassfest](https://github.com/evlas/VMC-IRSAP/actions/workflows/hassfest.yml/badge.svg)](https://github.com/evlas/VMC-IRSAP/actions/workflows/hassfest.yml)
+[![HACS Action](https://github.com/evlas/VMC-IRSAP/actions/workflows/hacs.yml/badge.svg)](https://github.com/evlas/VMC-IRSAP/actions/workflows/hacs.yml)
+[![License: GPL-3.0](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2024.1%2B-blue.svg)](https://www.home-assistant.io/)
 
-*For Italian documentation, please refer to [README.it.md](README.it.md).*
+🌐 *English | [Versione in italiano](README.it.md)*
 
 This repository provides a complete **Home Assistant** integration for monitoring and controlling **IRSAP HRD series** heat recovery and dehumidification mechanical ventilation units (VMC), powered by the **Dixell iPro.GENIUS** controller (Emerson Climate Technologies).
 

@@ -67,9 +67,15 @@ def to_signed_int16(val: int | None) -> int | None:
 class IrsapHrdCoordinator(DataUpdateCoordinator[dict[int, int]]):
     """Gestisce la comunicazione e la sincronizzazione dati con il Dixell iPro.GENIUS."""
 
-    def __init__(self, hass: HomeAssistant, config: dict[str, Any]) -> None:
+    def __init__(
+        self,
+        hass: HomeAssistant,
+        config: dict[str, Any],
+        version: str | None = None,
+    ) -> None:
         """Inizializza il coordinator."""
         self.config = config
+        self.version = str(version) if version is not None else "1.0.0"
         self.conn_type = config.get(CONF_CONNECTION_TYPE, CONN_TYPE_SERIAL)
         self.slave_id = int(config.get(CONF_SLAVE_ID, DEFAULT_SLAVE_ID))
         scan_interval = int(config.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL))

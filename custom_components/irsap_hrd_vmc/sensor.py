@@ -159,7 +159,7 @@ class IrsapHrdBaseSensor(CoordinatorEntity[IrsapHrdCoordinator], SensorEntity):
             name=NAME,
             manufacturer="IRSAP / Dixell",
             model="HRD (iPro.GENIUS)",
-            sw_version="FW 1.9",
+            sw_version=coordinator.version,
         )
 
 

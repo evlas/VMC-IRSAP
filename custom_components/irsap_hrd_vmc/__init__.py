@@ -6,6 +6,7 @@ import logging
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
+from homeassistant.loader import async_get_integration
 
 from .const import DOMAIN, PLATFORMS
 from .coordinator import IrsapHrdCoordinator
@@ -17,7 +18,19 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Configura l'integrazione IRSAP HRD VMC da una voce di configurazione."""
     hass.data.setdefault(DOMAIN, {})
 
-    coordinator = IrsapHrdCoordinator(hass, {**entry.data, **entry.options})
+    integration_version: str | None = None
+    try:
+        integration = await async_get_integration(hass, DOMAIN)
+        if integration.version is not None:
+            integration_version = str(integration.version)
+    except Exception:
+        pass
+
+    coordinator = IrsapHrdCoordinator(
+        hass,
+        {**entry.data, **entry.options},
+        version=integration_version,
+    )
     await coordinator.async_config_entry_first_refresh()
 
     hass.data[DOMAIN][entry.entry_id] = coordinator
