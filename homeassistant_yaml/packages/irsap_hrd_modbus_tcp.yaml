@@ -1,0 +1,241 @@
+# ==============================================================================
+# CONFIGURAZIONE NATIVA HOME ASSISTANT MODBUS (MODBUS TCP / GATEWAY ETHERNET/WI-FI)
+# Unità di Ventilazione Meccanica IRSAP HRD (Controllore Dixell iPro.GENIUS)
+#
+# Compatibile con gateway: Waveshare POE ETH-RS485, Elfin-EW11, USR-TCP232, ecc.
+# ==============================================================================
+
+modbus:
+  - name: irsap_hrd_vmc
+    type: tcp
+    host: 192.168.1.100    # Inserire l'indirizzo IP del proprio gateway RS485
+    port: 502              # Porta Modbus TCP (standard 502)
+    delay: 1
+    timeout: 3
+
+    switches:
+      - name: "VMC Accensione"
+        unique_id: vmc_accensione_power_tcp
+        slave: 1
+        address: 8245 # 0x2035 (0=Spenta, 1=Accesa)
+        write_type: holding
+        command_on: 1
+        command_off: 0
+        verify:
+          input_type: holding
+          address: 8245
+          state_on: 1
+          state_off: 0
+
+      - name: "VMC Modalità Estate Inverno"
+        unique_id: vmc_modalita_estate_inverno_tcp
+        slave: 1
+        address: 8231 # 0x2027 (0=Inverno, 1=Estate)
+        write_type: holding
+        command_on: 1
+        command_off: 0
+        verify:
+          input_type: holding
+          address: 8231
+          state_on: 1
+          state_off: 0
+
+      - name: "VMC Abilitazione Fasce Orarie"
+        unique_id: vmc_abilitazione_fasce_orarie_tcp
+        slave: 1
+        address: 43686 # 0xAAA6 (0=Disattive, 1=Attive)
+        write_type: holding
+        command_on: 1
+        command_off: 0
+
+    sensors:
+      - name: "VMC Temperatura Ripresa Ambiente"
+        unique_id: vmc_temperatura_ripresa_ambiente_tcp
+        slave: 1
+        address: 8192 # 0x2000
+        input_type: holding
+        unit_of_measurement: "°C"
+        device_class: temperature
+        state_class: measurement
+        scale: 0.1
+        precision: 1
+        data_type: int16
+
+      - name: "VMC Temperatura Immissione"
+        unique_id: vmc_temperatura_immissione_tcp
+        slave: 1
+        address: 8193 # 0x2001
+        input_type: holding
+        unit_of_measurement: "°C"
+        device_class: temperature
+        state_class: measurement
+        scale: 0.1
+        precision: 1
+        data_type: int16
+
+      - name: "VMC Qualità Aria"
+        unique_id: vmc_qualita_aria_tcp
+        slave: 1
+        address: 8194 # 0x2002
+        input_type: holding
+        state_class: measurement
+        data_type: uint16
+
+      - name: "VMC Temperatura Espulsione"
+        unique_id: vmc_temperatura_espulsione_tcp
+        slave: 1
+        address: 8195 # 0x2003
+        input_type: holding
+        unit_of_measurement: "°C"
+        device_class: temperature
+        state_class: measurement
+        scale: 0.1
+        precision: 1
+        data_type: int16
+
+      - name: "VMC Umidità Ripresa Ambiente"
+        unique_id: vmc_umidita_ripresa_ambiente_tcp
+        slave: 1
+        address: 8198 # 0x2006
+        input_type: holding
+        unit_of_measurement: "%"
+        device_class: humidity
+        state_class: measurement
+        scale: 1
+        precision: 0
+        data_type: uint16
+
+      - name: "VMC Temperatura Aria Esterna"
+        unique_id: vmc_temperatura_aria_esterna_tcp
+        slave: 1
+        address: 17664 # 0x4500
+        input_type: holding
+        unit_of_measurement: "°C"
+        device_class: temperature
+        state_class: measurement
+        scale: 0.1
+        precision: 1
+        data_type: int16
+
+    binary_sensors:
+      - name: "VMC Allarme Generale"
+        unique_id: vmc_allarme_generale_tcp
+        slave: 1
+        address: 8211 # 0x2013 (0=Ok, 1=Allarme)
+        input_type: holding
+        device_class: problem
+
+    numbers:
+      - name: "VMC Setpoint Temperatura Estivo"
+        unique_id: vmc_setpoint_temperatura_estivo_tcp
+        slave: 1
+        address: 8264 # 0x2048
+        input_type: holding
+        write_type: holding
+        native_min_value: 15
+        native_max_value: 32
+        native_step: 0.5
+        native_unit_of_measurement: "°C"
+        scale: 0.1
+        data_type: int16
+
+      - name: "VMC Setpoint Temperatura Invernale"
+        unique_id: vmc_setpoint_temperatura_invernale_tcp
+        slave: 1
+        address: 8276 # 0x2054
+        input_type: holding
+        write_type: holding
+        native_min_value: 15
+        native_max_value: 32
+        native_step: 0.5
+        native_unit_of_measurement: "°C"
+        scale: 0.1
+        data_type: int16
+
+      - name: "VMC Differenziale Temperatura"
+        unique_id: vmc_differenziale_temperatura_tcp
+        slave: 1
+        address: 8227 # 0x2023
+        input_type: holding
+        write_type: holding
+        native_min_value: 0.5
+        native_max_value: 5.0
+        native_step: 0.1
+        native_unit_of_measurement: "°C"
+        scale: 0.1
+        data_type: int16
+
+      - name: "VMC Setpoint Umidità Estivo"
+        unique_id: vmc_setpoint_umidita_estivo_tcp
+        slave: 1
+        address: 8265 # 0x2049
+        input_type: holding
+        write_type: holding
+        native_min_value: 30
+        native_max_value: 85
+        native_step: 1
+        native_unit_of_measurement: "%"
+        scale: 1
+        data_type: uint16
+
+      - name: "VMC Setpoint Umidità Invernale"
+        unique_id: vmc_setpoint_umidita_invernale_tcp
+        slave: 1
+        address: 8277 # 0x2055
+        input_type: holding
+        write_type: holding
+        native_min_value: 30
+        native_max_value: 85
+        native_step: 1
+        native_unit_of_measurement: "%"
+        scale: 1
+        data_type: uint16
+
+      - name: "VMC Differenziale Umidità"
+        unique_id: vmc_differenziale_umidita_tcp
+        slave: 1
+        address: 8228 # 0x2024
+        input_type: holding
+        write_type: holding
+        native_min_value: 1
+        native_max_value: 20
+        native_step: 1
+        native_unit_of_measurement: "%"
+        scale: 1
+        data_type: uint16
+
+      - name: "VMC Velocità Rinnovo"
+        unique_id: vmc_velocita_rinnovo_tcp
+        slave: 1
+        address: 8261 # 0x2045 (1..3)
+        input_type: holding
+        write_type: holding
+        native_min_value: 1
+        native_max_value: 3
+        native_step: 1
+        scale: 1
+        data_type: uint16
+
+      - name: "VMC Velocità Espulsione"
+        unique_id: vmc_velocita_espulsione_tcp
+        slave: 1
+        address: 8259 # 0x2043 (1..3)
+        input_type: holding
+        write_type: holding
+        native_min_value: 1
+        native_max_value: 3
+        native_step: 1
+        scale: 1
+        data_type: uint16
+
+      - name: "VMC Velocità Rinnovo Deumidificazione"
+        unique_id: vmc_velocita_rinnovo_deu_tcp
+        slave: 1
+        address: 8262 # 0x2046 (1..3)
+        input_type: holding
+        write_type: holding
+        native_min_value: 1
+        native_max_value: 3
+        native_step: 1
+        scale: 1
+        data_type: uint16

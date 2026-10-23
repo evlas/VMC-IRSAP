@@ -1,0 +1,56 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connessione IRSAP HRD VMC",
+        "description": "Seleziona la modalità di collegamento al controllore Dixell iPro.GENIUS della VMC IRSAP HRD.",
+        "data": {
+          "connection_type": "Tipo di Connessione"
+        }
+      },
+      "serial": {
+        "title": "Parametri Seriale RS485",
+        "description": "Imposta i parametri della porta seriale collegata ai morsetti 63 e 64.",
+        "data": {
+          "serial_port": "Porta Seriale (es. /dev/ttyUSB0)",
+          "baudrate": "Baudrate (predefinito 9600)",
+          "slave_id": "Indirizzo Modbus Slave (predefinito 1)",
+          "scan_interval": "Intervallo di aggiornamento (secondi)"
+        }
+      },
+      "tcp": {
+        "title": "Parametri Modbus TCP / Gateway",
+        "description": "Imposta l'indirizzo IP e la porta del gateway RS485-Ethernet/Wi-Fi (Waveshare, Elfin, USR, ESPHome).",
+        "data": {
+          "host": "Indirizzo IP o Hostname",
+          "port": "Porta TCP (predefinito 502)",
+          "slave_id": "Indirizzo Modbus Slave (predefinito 1)",
+          "scan_interval": "Intervallo di aggiornamento (secondi)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Impossibile stabilire la connessione con il controllore Dixell",
+      "invalid_auth": "Parametri non validi",
+      "unknown": "Errore imprevisto"
+    },
+    "abort": {
+      "already_configured": "Questo dispositivo o porta è già configurato"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Opzioni IRSAP HRD VMC",
+        "data": {
+          "slave_id": "Indirizzo Modbus Slave",
+          "scan_interval": "Intervallo di aggiornamento (secondi)",
+          "serial_port": "Porta Seriale",
+          "baudrate": "Baudrate",
+          "host": "Indirizzo IP Gateway",
+          "port": "Porta TCP Gateway"
+        }
+      }
+    }
+  }
+}

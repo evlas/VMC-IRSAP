@@ -1,0 +1,56 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "IRSAP HRD VMC Connection",
+        "description": "Select the connection type to the Dixell iPro.GENIUS controller of the IRSAP HRD unit.",
+        "data": {
+          "connection_type": "Connection Type"
+        }
+      },
+      "serial": {
+        "title": "RS485 Serial Parameters",
+        "description": "Configure the serial port connected to terminals 63 and 64.",
+        "data": {
+          "serial_port": "Serial Port (e.g. /dev/ttyUSB0)",
+          "baudrate": "Baudrate (default 9600)",
+          "slave_id": "Modbus Slave ID (default 1)",
+          "scan_interval": "Update interval (seconds)"
+        }
+      },
+      "tcp": {
+        "title": "Modbus TCP / Gateway Parameters",
+        "description": "Configure the IP address and port of your RS485-to-Ethernet/Wi-Fi bridge.",
+        "data": {
+          "host": "IP Address or Hostname",
+          "port": "TCP Port (default 502)",
+          "slave_id": "Modbus Slave ID (default 1)",
+          "scan_interval": "Update interval (seconds)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to the Dixell controller",
+      "invalid_auth": "Invalid parameters",
+      "unknown": "Unexpected error"
+    },
+    "abort": {
+      "already_configured": "Device or port is already configured"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "IRSAP HRD VMC Options",
+        "data": {
+          "slave_id": "Modbus Slave ID",
+          "scan_interval": "Update interval (seconds)",
+          "serial_port": "Serial Port",
+          "baudrate": "Baudrate",
+          "host": "Gateway IP Address",
+          "port": "Gateway TCP Port"
+        }
+      }
+    }
+  }
+}

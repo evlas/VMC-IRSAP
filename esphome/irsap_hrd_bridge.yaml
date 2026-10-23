@@ -1,0 +1,184 @@
+# ==============================================================================
+# FIRMWARE ESPHOME PER CONTROLLO DIRETTO E BRIDGE RS485 IRSAP HRD
+# Controllore Dixell iPro.GENIUS (Morsetti 63 [-] e 64 [+])
+# ==============================================================================
+
+substitutions:
+  name: irsap-hrd-vmc
+  friendly_name: "IRSAP HRD VMC"
+
+esphome:
+  name: ${name}
+  friendly_name: ${friendly_name}
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+
+# Configurazione Wi-Fi e API nativa Home Assistant
+wifi:
+  ssid: "IL_TUO_WIFI"
+  password: "LA_TUA_PASSWORD"
+
+api:
+ota:
+  - platform: esphome
+
+logger:
+  level: INFO
+
+# Configurazione UART hardware per RS485
+uart:
+  id: uart_modbus
+  tx_pin: GPIO17       # TX verso DI del modulo RS485
+  rx_pin: GPIO16       # RX verso RO del modulo RS485
+  baud_rate: 9600
+  stop_bits: 1
+
+modbus:
+  id: modbus_bus
+  uart_id: uart_modbus
+  flow_control_pin: GPIO4  # Pin DE / RE del modulo MAX485 (omettere se scheda con auto-flow)
+
+modbus_controller:
+  - id: dixell_ipro
+    address: 1
+    modbus_id: modbus_bus
+    update_interval: 15s
+
+sensor:
+  - platform: modbus_controller
+    modbus_controller_id: dixell_ipro
+    name: "Temperatura Ripresa Ambiente"
+    address: 0x2000
+    register_type: holding
+    value_type: S_WORD
+    filters:
+      - multiply: 0.1
+    unit_of_measurement: "°C"
+    device_class: temperature
+    state_class: measurement
+    accuracy_decimals: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: dixell_ipro
+    name: "Temperatura Immissione"
+    address: 0x2001
+    register_type: holding
+    value_type: S_WORD
+    filters:
+      - multiply: 0.1
+    unit_of_measurement: "°C"
+    device_class: temperature
+    state_class: measurement
+    accuracy_decimals: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: dixell_ipro
+    name: "Temperatura Espulsione"
+    address: 0x2003
+    register_type: holding
+    value_type: S_WORD
+    filters:
+      - multiply: 0.1
+    unit_of_measurement: "°C"
+    device_class: temperature
+    state_class: measurement
+    accuracy_decimals: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: dixell_ipro
+    name: "Temperatura Aria Esterna"
+    address: 0x4500
+    register_type: holding
+    value_type: S_WORD
+    filters:
+      - multiply: 0.1
+    unit_of_measurement: "°C"
+    device_class: temperature
+    state_class: measurement
+    accuracy_decimals: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: dixell_ipro
+    name: "Umidità Ripresa Ambiente"
+    address: 0x2006
+    register_type: holding
+    value_type: U_WORD
+    unit_of_measurement: "%"
+    device_class: humidity
+    state_class: measurement
+    accuracy_decimals: 0
+
+  - platform: modbus_controller
+    modbus_controller_id: dixell_ipro
+    name: "Qualità Aria"
+    address: 0x2002
+    register_type: holding
+    value_type: U_WORD
+    state_class: measurement
+
+binary_sensor:
+  - platform: modbus_controller
+    modbus_controller_id: dixell_ipro
+    name: "Allarme Generale"
+    address: 0x2013
+    register_type: holding
+    device_class: problem
+
+switch:
+  - platform: modbus_controller
+    modbus_controller_id: dixell_ipro
+    name: "Accensione VMC"
+    address: 0x2035
+    register_type: holding
+    write_registers: 0x2035
+
+  - platform: modbus_controller
+    modbus_controller_id: dixell_ipro
+    name: "Modalità Estate/Inverno (ON=Estate, OFF=Inverno)"
+    address: 0x2027
+    register_type: holding
+    write_registers: 0x2027
+
+number:
+  - platform: modbus_controller
+    modbus_controller_id: dixell_ipro
+    name: "Velocità Rinnovo (1-3)"
+    address: 0x2045
+    value_type: U_WORD
+    min_value: 1
+    max_value: 3
+    step: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: dixell_ipro
+    name: "Velocità Espulsione (1-3)"
+    address: 0x2043
+    value_type: U_WORD
+    min_value: 1
+    max_value: 3
+    step: 1
+
+  - platform: modbus_controller
+    modbus_controller_id: dixell_ipro
+    name: "Setpoint Temperatura Estivo"
+    address: 0x2048
+    value_type: S_WORD
+    multiply: 0.1
+    min_value: 15.0
+    max_value: 32.0
+    step: 0.5
+    unit_of_measurement: "°C"
+
+  - platform: modbus_controller
+    modbus_controller_id: dixell_ipro
+    name: "Setpoint Temperatura Invernale"
+    address: 0x2054
+    value_type: S_WORD
+    multiply: 0.1
+    min_value: 15.0
+    max_value: 32.0
+    step: 0.5
+    unit_of_measurement: "°C"

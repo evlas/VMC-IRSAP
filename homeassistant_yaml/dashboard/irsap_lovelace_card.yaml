@@ -1,0 +1,60 @@
+# ==============================================================================
+# SCHEDA LOVELACE DASHBOARD HOME ASSISTANT PER IRSAP HRD VMC
+# ==============================================================================
+# Istruzioni:
+# 1. Nella dashboard di Home Assistant cliccare sui 3 puntini in alto a destra -> Modifica Dashboard
+# 2. Cliccare su "+ Aggiungi Scheda" -> Scorrere in basso fino a "Manuale"
+# 3. Incollare il codice seguente:
+
+type: vertical-stack
+cards:
+  - type: custom:mushroom-climate-card
+    entity: climate.irsap_hrd_climatizzazione_vmc
+    name: IRSAP HRD VMC
+    icon: mdi:air-conditioner
+    show_temperature_control: true
+    hvac_modes:
+      - 'off'
+      - heat
+      - cool
+
+  - type: glance
+    title: Temperature e Sonde
+    columns: 4
+    entities:
+      - entity: sensor.irsap_hrd_temperatura_ripresa_ambiente
+        name: Ambiente
+      - entity: sensor.irsap_hrd_temperatura_immissione
+        name: Immissione
+      - entity: sensor.irsap_hrd_temperatura_espulsione
+        name: Espulsione
+      - entity: sensor.irsap_hrd_temperatura_aria_esterna
+        name: Esterna
+
+  - type: glance
+    columns: 3
+    entities:
+      - entity: sensor.irsap_hrd_umidita_ripresa_ambiente
+        name: Umidità
+      - entity: sensor.irsap_hrd_qualita_aria
+        name: Qualità Aria
+      - entity: sensor.irsap_hrd_efficienza_recupero_termico
+        name: Efficienza
+
+  - type: entities
+    title: Regolazioni e Ventilatori
+    entities:
+      - entity: switch.irsap_hrd_accensione_macchina_on_off
+        name: Accensione VMC
+      - entity: switch.irsap_hrd_modalita_estate_inverno_on_estate_off_inverno
+        name: Modalità Stagionale
+      - entity: number.irsap_hrd_velocita_rinnovo_1_3
+        name: Velocità Rinnovo (Immissione)
+      - entity: number.irsap_hrd_velocita_espulsione_1_3
+        name: Velocità Espulsione
+      - entity: number.irsap_hrd_velocita_rinnovo_deumidificazione_1_3
+        name: Velocità in Deumidificazione
+      - entity: binary_sensor.irsap_hrd_allarme_generale
+        name: Allarme Generale
+      - entity: switch.irsap_hrd_abilitazione_fasce_orarie
+        name: Fasce Orarie

@@ -1,0 +1,75 @@
+TIPO,Nome,Indirizzo Esadecimale,Lettura Scrittura,Note
+STATO FISICO INGRESSI / USCITE,,,,
+DINT,Analog Input AI01,F000,R,
+DINT,Analog Input AI02,F001,R,
+DINT,Analog Input AI03,F002,R,
+DINT,Analog Input AI04,F003,R,
+DINT,Analog Input AI05,F004,R,
+DINT,Analog Input AI06,F005,R,
+DINT,Analog Output AO01,F020,R,
+DINT,Analog Output AO02,F021,R,
+DINT,Analog Output AO03,F022,R,
+DINT,Analog Output AO04,F023,R,
+BOOL,Digital Input DI01,F050,R,
+BOOL,Digital Input DI02,F051,R,
+BOOL,Digital Input DI03,F052,R,
+BOOL,Digital Input DI04,F053,R,
+BOOL,Digital Input DI05,F054,R,
+BOOL,Digital Input DI06,F055,R,
+BOOL,Digital Input DI07,F056,R,
+BOOL,Digital Input DI08,F057,R,
+BOOL,Digital Output Relay RL01,F080,R,
+BOOL,Digital Output Relay RL02,F081,R,
+BOOL,Digital Output Relay RL03,F082,R,
+BOOL,Digital Output Relay RL04,F083,R,
+BOOL,Digital Output Relay RL05,F084,R,
+BOOL,Digital Output Relay RL06,F085,R,
+BOOL,Digital Output Relay RL07,F086,R,
+BOOL,Digital Output Relay RL08,F087,R,
+SETPONT ,,,,
+DINT,Set Regolazione Estivo,2048,R/W,Valore in decimi( per esempio 200 corrisponde a 20°C)
+DINT,Set Regolazione Invernale,2054,R/W,Valore in decimi( per esempio 200 corrisponde a 20°C)
+DINT,Differenziale Regolazione Estivo,2023,R/W,Valore in decimi( per esempio 200 corrisponde a 20°C)
+DINT,Differenziale Regolazione Invernale,2023,R/W,Valore in decimi( per esempio 200 corrisponde a 20°C)
+DINT,Set umidità Estivo,2049,R/W,
+DINT,Set umidità  Invernale,2055,R/W,
+DINT,Differenziale umidità  Estivo,2024,R/W,
+DINT,Differenziale umidità  Invernale,2024,R/W,
+DINT,Set velocità rinnovo,2045,R/W,valore da 1 a 3
+DINT,Set velocità espulsione,2043,R/W,valore da 1 a 3
+DINT,Set velocità rinnovo in deu/int,2046,R/W,valore da 1 a 3
+SONDE,,,,
+DINT,Sonda AriaEsterna,4500,R,Valore in decimi( per esempio 200 corrisponde a 20°C)
+DINT,Sonda Espulsione,2003,R,Valore in decimi( per esempio 200 corrisponde a 20°C)
+DINT,Sonda Immissione,2001,R,Valore in decimi( per esempio 200 corrisponde a 20°C)
+DINT,Sonda Umidita Ripresa Ambiente,2006,R,
+DINT,Sonda Qualità aria,2002,R,
+DINT,Sonda Temparatura Ripresa Ambiente,2000,R,Valore in decimi( per esempio 200 corrisponde a 20°C)
+FASCE ORARIE,,,,
+DINT,Giorno,4000,R,
+DINT,DayWeek,4005,R,
+DINT,Ora,4003,R,
+DINT,Minuti,4004,R,
+DINT,Mese,4001,R,
+DINT,Anno,4002,R,
+DINT,FasceAttiveDomenica,AAAD,R/W,
+DINT,FasceAttiveGiovedi,AAAA,R/W,
+DINT,FasceAttiveLunedi,AAA7,R/W,
+DINT,FasceAttiveMartedi,AAA8,R/W,
+DINT,FasceAttiveMercoledi,AAA9,R/W,
+DINT,FasceAttiveSabato,AAA7C,R/W,
+DINT,FasceAttiveVenerdi,AAAB,R/W,
+DINT,OraStartFascia1,AAA0,R/W,
+DINT,OraStartFascia2,AAA1,R/W,
+DINT,OraStartFascia3,AAA2,R/W,
+DINT,OraStopFascia1,AAA3,R/W,
+DINT,OraStopFascia2,AAA4,R/W,
+DINT,OraStopFascia3,AAA5,R/W,
+BOOL,OnOffRegolazioneSuFasceOrarie,AAA6,R/W,
+DINT,TipologiaFascia1,3654,R/W,
+DINT,TipologiaFascia2,3658,R/W,
+DINT,TipologiaFascia3,3655,R/W,
+ALTRE VARIABILI,,,,
+BOOL,Estate_Inverno,2027,R/W,0=Inverno 1=Estate
+BOOL,AllarmeGenerale,2013,R,0=Non in allarme 1=In allarme
+BOOL,OnOff,2035,R/W,0=Spenta 1=Accesa
