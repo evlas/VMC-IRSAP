@@ -1,5 +1,12 @@
 # Integrazione Home Assistant per VMC IRSAP HRD (Dixell iPro.GENIUS)
 
+[![HACS Custom](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/hacs/default)
+[![Home Assistant](https://img.shields.io/badge/Home%20Assistant-2023.1.0%2B-blue.svg)](https://www.home-assistant.io/)
+[![Language: Italian](https://img.shields.io/badge/Docs-Italiano-green.svg)](README.md)
+[![Language: English](https://img.shields.io/badge/Docs-English-blue.svg)](README_EN.md)
+
+*Per la versione in lingua inglese, consultare [README_EN.md](README_EN.md).*
+
 Questo repository fornisce l'integrazione completa per **Home Assistant** per il controllo e il monitoraggio delle unità di **Ventilazione Meccanica Controllata (VMC) con deumidificazione e recupero di calore IRSAP serie HRD**, dotate di controllore elettronico **Dixell iPro.GENIUS** (piattaforma Emerson / iCHiLL 200).
 
 ---
