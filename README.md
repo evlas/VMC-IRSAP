@@ -62,26 +62,43 @@ Sono fornite tre soluzioni pronte all'uso, a seconda dell'architettura desiderat
 
 ---
 
-## 🚀 Metodo 1: Installazione Custom Component (Consigliato)
+## 📦 Installazione tramite HACS (Home Assistant Community Store)
 
-### 1. Copia dei file
-Copiare la cartella [`custom_components/irsap_hrd_vmc`](file:///home/vito/Documenti/GitLocale/VMC%20IRSAP/custom_components/irsap_hrd_vmc) nella directory `/config/custom_components/` della propria istanza di Home Assistant:
+L'integrazione è strutturata nel pieno rispetto dello standard **HACS** (presenza di `hacs.json`, struttura directory `custom_components/irsap_hrd_vmc/` e `manifest.json` conforme).
 
-```bash
-# Esempio su Home Assistant OS / Core
-cp -r custom_components/irsap_hrd_vmc /config/custom_components/
-```
+### Procedura Passo-Passo per l'Installazione con HACS:
 
-### 2. Riavvio di Home Assistant
-Riavviare Home Assistant da **Strumenti per sviluppatori** -> **Riavvia**.
+1. **Carica il repository su GitHub**:
+   Se non lo hai già fatto, crea un repository su GitHub e pubblica questo progetto:
+   ```bash
+   git remote add origin https://github.com/TUO_UTENTE/TUO_REPOSITORY.git
+   git push -u origin main --tags
+   ```
 
-### 3. Configurazione da Interfaccia Grafica
-1. Andare in **Impostazioni** -> **Dispositivi e Servizi** -> **Aggiungi Integrazione**.
-2. Cercare **"IRSAP HRD VMC"**.
-3. Scegliere la tipologia di collegamento:
-   - **Seriale RS485 diretta**: specificare la porta (es. `/dev/ttyUSB0`) e il baudrate (`9600`).
-   - **Gateway Modbus TCP / Wi-Fi**: specificare l'IP del gateway (es. `192.168.1.100`) e la porta (`502`).
-4. Confermare: verranno generate automaticamente tutte le entità.
+2. **Aggiungi come Repository Personalizzato in HACS**:
+   - Nel menù laterale di Home Assistant apri **HACS**.
+   - Clicca sulla sezione **Integrazioni** (Integrations).
+   - In alto a destra, clicca sui **tre puntini verticali** (`⋮`) e seleziona **Repository personalizzati** (*Custom repositories*).
+   - Nel campo **Repository**, incolla l'URL del tuo repository GitHub:
+     `https://github.com/TUO_UTENTE/TUO_REPOSITORY`
+   - Nel menù a tendina **Tipo** (*Category*), seleziona **Integrazione** (*Integration*).
+   - Clicca su **Aggiungi** (*Add*).
+
+3. **Scarica l'Integrazione**:
+   - Troverai ora la scheda **IRSAP HRD VMC** nella schermata di HACS.
+   - Cliccaci sopra e premi il pulsante **Scarica** (*Download*) in basso a destra.
+   - HACS scaricherà automaticamente tutti i file nella cartella `/config/custom_components/irsap_hrd_vmc/`.
+
+4. **Riavvia Home Assistant**:
+   - Vai in **Strumenti per sviluppatori** -> scheda **YAML** -> clicca su **Riavvia**.
+
+5. **Aggiungi il Dispositivo da Interfaccia Grafica**:
+   - Vai in **Impostazioni** -> **Dispositivi e Servizi** -> **Aggiungi Integrazione**.
+   - Cerca **IRSAP HRD VMC**.
+   - Seleziona il tipo di collegamento:
+     - **Seriale RS485 diretta** (es. `/dev/ttyUSB0`, 9600 baud, slave ID 1).
+     - **Gateway Modbus TCP / Wi-Fi** (es. indirizzo IP `192.168.1.100`, porta `502`, slave ID 1).
+   - Conferma: tutte le entità (clima, ventole, sonde, setpoint, allarmi) saranno create automaticamente!
 
 ---
 
