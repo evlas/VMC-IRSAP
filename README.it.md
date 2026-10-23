@@ -9,6 +9,10 @@
 
 🌐 *[English version](README.md) | Versione in italiano*
 
+> [!WARNING]
+> ### ⚠️ Progetto in Sviluppo (Work in Progress)
+> Questa integrazione è attualmente in fase di sviluppo e collaudo attivo. Funzionalità, mappatura dei registri e configurazioni potrebbero subire variazioni. Feedback, segnalazioni di problemi e contributi sono benvenuti!
+
 Questo repository fornisce l'integrazione completa per **Home Assistant** per il controllo e il monitoraggio delle unità di **Ventilazione Meccanica Controllata (VMC) con deumidificazione e recupero di calore IRSAP serie HRD**, dotate di controllore elettronico **Dixell iPro.GENIUS** (piattaforma Emerson / iCHiLL 200).
 
 ---

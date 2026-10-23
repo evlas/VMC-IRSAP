@@ -9,6 +9,10 @@
 
 🌐 *English | [Versione in italiano](README.it.md)*
 
+> [!WARNING]
+> ### ⚠️ Work in Progress (WIP)
+> This project is currently in active development and testing. Features, register mappings, and configurations are subject to change. Feedback, issues, and contributions are welcome!
+
 This repository provides a complete **Home Assistant** integration for monitoring and controlling **IRSAP HRD series** heat recovery and dehumidification mechanical ventilation units (VMC), powered by the **Dixell iPro.GENIUS** controller (Emerson Climate Technologies).
 
 ---
