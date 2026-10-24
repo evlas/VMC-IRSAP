@@ -1,12 +1,16 @@
 {
   "domain": "irsap_hrd_vmc",
   "name": "IRSAP HRD VMC",
-  "codeowners": ["@evlas"],
+  "codeowners": [
+    "@evlas"
+  ],
   "config_flow": true,
   "documentation": "https://github.com/evlas/VMC-IRSAP",
-  "issue_tracker": "https://github.com/evlas/VMC-IRSAP/issues",
   "integration_type": "hub",
   "iot_class": "local_polling",
-  "requirements": ["pymodbus>=3.5.0"],
+  "issue_tracker": "https://github.com/evlas/VMC-IRSAP/issues",
+  "requirements": [
+    "pymodbus>=3.5.0"
+  ],
   "version": "1.0.0"
 }

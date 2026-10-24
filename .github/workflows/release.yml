@@ -64,7 +64,7 @@ jobs:
             TAG="${GITHUB_REF#refs/tags/}"
           fi
           VERSION="${TAG#v}"
-          python3 -c "import json; p='custom_components/irsap_hrd_vmc/manifest.json'; d=json.load(open(p)); d['version']='$VERSION'; json.dump(d, open(p, 'w'), indent=2); open(p, 'a').write('\n')"
+          python3 -c "import json; p='custom_components/irsap_hrd_vmc/manifest.json'; d=json.load(open(p)); d['version']='$VERSION'; sorted_d={'domain': d['domain'], 'name': d['name'], **{k: d[k] for k in sorted(d.keys()) if k not in ('domain', 'name')}}; json.dump(sorted_d, open(p, 'w'), indent=2); open(p, 'a').write('\n')"
 
       - name: Zip custom_components
         run: |
