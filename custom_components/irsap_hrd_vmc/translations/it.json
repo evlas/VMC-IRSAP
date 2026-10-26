@@ -43,12 +43,29 @@
       "init": {
         "title": "Opzioni IRSAP HRD VMC",
         "data": {
+          "connection_type": "Tipo di Connessione",
           "slave_id": "Indirizzo Modbus Slave",
           "scan_interval": "Intervallo di aggiornamento (secondi)",
           "serial_port": "Porta Seriale",
           "baudrate": "Baudrate",
           "host": "Indirizzo IP Gateway",
           "port": "Porta TCP Gateway"
+        }
+      },
+      "tcp_options": {
+        "title": "Parametri Modbus TCP",
+        "description": "Imposta i parametri di connessione TCP.",
+        "data": {
+          "host": "Indirizzo IP Gateway",
+          "port": "Porta TCP Gateway"
+        }
+      },
+      "serial_options": {
+        "title": "Parametri Seriale RS485",
+        "description": "Imposta i parametri della porta seriale.",
+        "data": {
+          "serial_port": "Porta Seriale",
+          "baudrate": "Baudrate"
         }
       }
     }

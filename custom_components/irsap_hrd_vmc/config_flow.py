@@ -156,28 +156,49 @@ class IrsapHrdConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 class IrsapHrdOptionsFlowHandler(config_entries.OptionsFlow):
     """Gestisce la modifica delle opzioni dell'integrazione."""
 
-    def __init__(self, config_entry: config_entries.ConfigEntry) -> None:
+    def __init__(self, config_entry: config_entries.ConfigEntry | None = None) -> None:
         """Inizializza l'handler delle opzioni."""
-        self.config_entry = config_entry
+        self._config_entry_compat = config_entry
+        self._temp_data: dict[str, Any] = {}
+
+    @property
+    def config_entry(self) -> config_entries.ConfigEntry:
+        """Restituisce il config_entry corrente in modo retrocompatibile."""
+        try:
+            entry = super().config_entry
+            if entry is not None:
+                return entry
+        except Exception:
+            pass
+        return self._config_entry_compat
 
     async def async_step_init(
         self, user_input: dict[str, Any] | None = None
     ) -> FlowResult:
         """Gestisce le opzioni modificabili."""
-        if user_input is not None:
-            return self.async_create_entry(title="", data=user_input)
-
         current = {**self.config_entry.data, **self.config_entry.options}
         conn_type = current.get(CONF_CONNECTION_TYPE, CONN_TYPE_SERIAL)
 
+        if user_input is not None:
+            new_type = user_input.get(CONF_CONNECTION_TYPE, conn_type)
+            if new_type == conn_type:
+                return self.async_create_entry(title="", data=user_input)
+
+            # Tipo di connessione cambiato: raccoglie i parametri del nuovo tipo
+            self._temp_data = dict(user_input)
+            if new_type == CONN_TYPE_TCP:
+                return await self.async_step_tcp_options()
+            return await self.async_step_serial_options()
+
         fields: dict[Any, Any] = {
             vol.Required(
-                CONF_SLAVE_ID, default=current.get(CONF_SLAVE_ID, DEFAULT_SLAVE_ID)
-            ): vol.All(vol.Coerce(int), vol.Range(min=1, max=247)),
-            vol.Required(
-                CONF_SCAN_INTERVAL,
-                default=current.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL),
-            ): vol.All(vol.Coerce(int), vol.Range(min=5, max=300)),
+                CONF_CONNECTION_TYPE, default=conn_type
+            ): vol.In(
+                {
+                    CONN_TYPE_SERIAL: "Seriale RS485 diretta (USB-RS485)",
+                    CONN_TYPE_TCP: "Gateway Modbus TCP / Wi-Fi (Waveshare, Elfin, USR, ESPHome)",
+                }
+            ),
         }
 
         if conn_type == CONN_TYPE_TCP:
@@ -203,7 +224,63 @@ class IrsapHrdOptionsFlowHandler(config_entries.OptionsFlow):
                 )
             ] = vol.In([4800, 9600, 19200, 38400, 57600, 115200])
 
+        fields[
+            vol.Required(
+                CONF_SLAVE_ID, default=current.get(CONF_SLAVE_ID, DEFAULT_SLAVE_ID)
+            )
+        ] = vol.All(vol.Coerce(int), vol.Range(min=1, max=247))
+        fields[
+            vol.Required(
+                CONF_SCAN_INTERVAL,
+                default=current.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL),
+            )
+        ] = vol.All(vol.Coerce(int), vol.Range(min=5, max=300))
+
         return self.async_show_form(
             step_id="init",
             data_schema=vol.Schema(fields),
         )
+
+    async def async_step_tcp_options(
+        self, user_input: dict[str, Any] | None = None
+    ) -> FlowResult:
+        """Configurazione parametri Modbus TCP in caso di cambio tipo connessione."""
+        current = {**self.config_entry.data, **self.config_entry.options}
+        if user_input is not None:
+            data = {**self._temp_data, **user_input, CONF_CONNECTION_TYPE: CONN_TYPE_TCP}
+            return self.async_create_entry(title="", data=data)
+
+        schema = vol.Schema(
+            {
+                vol.Required(
+                    CONF_HOST, default=current.get(CONF_HOST, "192.168.1.100")
+                ): str,
+                vol.Required(
+                    CONF_PORT, default=current.get(CONF_PORT, DEFAULT_PORT)
+                ): vol.All(vol.Coerce(int), vol.Range(min=1, max=65535)),
+            }
+        )
+        return self.async_show_form(step_id="tcp_options", data_schema=schema)
+
+    async def async_step_serial_options(
+        self, user_input: dict[str, Any] | None = None
+    ) -> FlowResult:
+        """Configurazione parametri seriale in caso di cambio tipo connessione."""
+        current = {**self.config_entry.data, **self.config_entry.options}
+        if user_input is not None:
+            data = {**self._temp_data, **user_input, CONF_CONNECTION_TYPE: CONN_TYPE_SERIAL}
+            return self.async_create_entry(title="", data=data)
+
+        schema = vol.Schema(
+            {
+                vol.Required(
+                    CONF_SERIAL_PORT,
+                    default=current.get(CONF_SERIAL_PORT, "/dev/ttyUSB0"),
+                ): str,
+                vol.Required(
+                    CONF_BAUDRATE,
+                    default=current.get(CONF_BAUDRATE, DEFAULT_BAUDRATE),
+                ): vol.In([4800, 9600, 19200, 38400, 57600, 115200]),
+            }
+        )
+        return self.async_show_form(step_id="serial_options", data_schema=schema)
