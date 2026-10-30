@@ -6,6 +6,9 @@ import logging
 from typing import Any
 
 from homeassistant.components.climate import (
+    FAN_HIGH,
+    FAN_LOW,
+    FAN_MEDIUM,
     ClimateEntity,
     ClimateEntityFeature,
     HVACAction,
@@ -34,9 +37,9 @@ from .coordinator import IrsapHrdCoordinator, to_signed_int16
 
 _LOGGER = logging.getLogger(__name__)
 
-FAN_MODE_LOW = "1 - Bassa"
-FAN_MODE_MEDIUM = "2 - Media"
-FAN_MODE_HIGH = "3 - Alta"
+FAN_MODE_LOW = FAN_LOW
+FAN_MODE_MEDIUM = FAN_MEDIUM
+FAN_MODE_HIGH = FAN_HIGH
 
 FAN_MODE_MAP = {
     FAN_MODE_LOW: 1,
@@ -61,7 +64,7 @@ class IrsapHrdClimate(CoordinatorEntity[IrsapHrdCoordinator], ClimateEntity):
     """Rappresentazione del climatizzatore/VMC IRSAP HRD."""
 
     _attr_has_entity_name = True
-    _attr_name = "Climatizzazione VMC"
+    _attr_translation_key = "vmc_climate"
     _attr_temperature_unit = UnitOfTemperature.CELSIUS
     _attr_target_temperature_step = 0.5
     _attr_min_temp = 10.0

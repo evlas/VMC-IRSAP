@@ -69,5 +69,76 @@
         }
       }
     }
+  },
+  "entity": {
+    "climate": {
+      "vmc_climate": { "name": "Climatizzazione VMC" }
+    },
+    "fan": {
+      "rinnovo": { "name": "Ventola Rinnovo (Immissione)" },
+      "espulsione": { "name": "Ventola Espulsione" },
+      "rinnovo_deu": { "name": "Ventola Rinnovo in Deumidificazione" }
+    },
+    "sensor": {
+      "temp_ripresa": { "name": "Temperatura Ripresa Ambiente" },
+      "temp_immissione": { "name": "Temperatura Immissione" },
+      "temp_espulsione": { "name": "Temperatura Espulsione" },
+      "temp_esterna": { "name": "Temperatura Aria Esterna" },
+      "umidita_ripresa": { "name": "Umidità Ripresa Ambiente" },
+      "qualita_aria": { "name": "Qualità Aria" },
+      "efficienza_recupero": { "name": "Efficienza Recupero Termico" },
+      "rtc_orologio": { "name": "Data e Ora Macchina (RTC)" },
+      "ai01": { "name": "Ingresso Analogico AI01" },
+      "ai02": { "name": "Ingresso Analogico AI02" },
+      "ai03": { "name": "Ingresso Analogico AI03" },
+      "ai04": { "name": "Ingresso Analogico AI04" },
+      "ai05": { "name": "Ingresso Analogico AI05" },
+      "ai06": { "name": "Ingresso Analogico AI06" },
+      "ao01": { "name": "Uscita Analogica AO01" },
+      "ao02": { "name": "Uscita Analogica AO02" },
+      "ao03": { "name": "Uscita Analogica AO03" },
+      "ao04": { "name": "Uscita Analogica AO04" }
+    },
+    "number": {
+      "set_reg_estivo": { "name": "Setpoint Temperatura Estivo" },
+      "set_reg_invernale": { "name": "Setpoint Temperatura Invernale" },
+      "diff_regolazione": { "name": "Differenziale Temperatura" },
+      "set_umidita_estivo": { "name": "Setpoint Umidità Estivo" },
+      "set_umidita_invernale": { "name": "Setpoint Umidità Invernale" },
+      "diff_umidita": { "name": "Differenziale Umidità" },
+      "vel_rinnovo": { "name": "Velocità Rinnovo (1-3)" },
+      "vel_espulsione": { "name": "Velocità Espulsione (1-3)" },
+      "vel_rinnovo_deu": { "name": "Velocità Rinnovo Deumidificazione (1-3)" },
+      "ora_start_fascia_1": { "name": "Ora Inizio Fascia 1" },
+      "ora_stop_fascia_1": { "name": "Ora Fine Fascia 1" },
+      "ora_start_fascia_2": { "name": "Ora Inizio Fascia 2" },
+      "ora_stop_fascia_2": { "name": "Ora Fine Fascia 2" },
+      "ora_start_fascia_3": { "name": "Ora Inizio Fascia 3" },
+      "ora_stop_fascia_3": { "name": "Ora Fine Fascia 3" }
+    },
+    "switch": {
+      "power": { "name": "Accensione Macchina (On/Off)" },
+      "estate_inverno": { "name": "Modalità Estate / Inverno (ON=Estate, OFF=Inverno)" },
+      "regolazione_fasce": { "name": "Abilitazione Fasce Orarie" }
+    },
+    "binary_sensor": {
+      "allarme_generale": { "name": "Allarme Generale" },
+      "di01": { "name": "Ingresso Digitale DI01" },
+      "di02": { "name": "Ingresso Digitale DI02" },
+      "di03": { "name": "Ingresso Digitale DI03" },
+      "di04": { "name": "Ingresso Digitale DI04" },
+      "di05": { "name": "Ingresso Digitale DI05" },
+      "di06": { "name": "Ingresso Digitale DI06" },
+      "di07": { "name": "Ingresso Digitale DI07" },
+      "di08": { "name": "Ingresso Digitale DI08" },
+      "rl01": { "name": "Stato Relè RL01" },
+      "rl02": { "name": "Stato Relè RL02" },
+      "rl03": { "name": "Stato Relè RL03" },
+      "rl04": { "name": "Stato Relè RL04" },
+      "rl05": { "name": "Stato Relè RL05" },
+      "rl06": { "name": "Stato Relè RL06" },
+      "rl07": { "name": "Stato Relè RL07" },
+      "rl08": { "name": "Stato Relè RL08" }
+    }
   }
 }

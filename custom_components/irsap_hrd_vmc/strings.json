@@ -69,5 +69,76 @@
         }
       }
     }
+  },
+  "entity": {
+    "climate": {
+      "vmc_climate": { "name": "VMC Climate Control" }
+    },
+    "fan": {
+      "rinnovo": { "name": "Supply Fan (Renewal)" },
+      "espulsione": { "name": "Exhaust Fan" },
+      "rinnovo_deu": { "name": "Dehumidification Supply Fan" }
+    },
+    "sensor": {
+      "temp_ripresa": { "name": "Return Air Temperature" },
+      "temp_immissione": { "name": "Supply Air Temperature" },
+      "temp_espulsione": { "name": "Exhaust Air Temperature" },
+      "temp_esterna": { "name": "Outdoor Air Temperature" },
+      "umidita_ripresa": { "name": "Return Air Humidity" },
+      "qualita_aria": { "name": "Air Quality" },
+      "efficienza_recupero": { "name": "Heat Recovery Efficiency" },
+      "rtc_orologio": { "name": "Controller Date & Time (RTC)" },
+      "ai01": { "name": "Analog Input AI01" },
+      "ai02": { "name": "Analog Input AI02" },
+      "ai03": { "name": "Analog Input AI03" },
+      "ai04": { "name": "Analog Input AI04" },
+      "ai05": { "name": "Analog Input AI05" },
+      "ai06": { "name": "Analog Input AI06" },
+      "ao01": { "name": "Analog Output AO01" },
+      "ao02": { "name": "Analog Output AO02" },
+      "ao03": { "name": "Analog Output AO03" },
+      "ao04": { "name": "Analog Output AO04" }
+    },
+    "number": {
+      "set_reg_estivo": { "name": "Summer Temperature Setpoint" },
+      "set_reg_invernale": { "name": "Winter Temperature Setpoint" },
+      "diff_regolazione": { "name": "Temperature Differential" },
+      "set_umidita_estivo": { "name": "Summer Humidity Setpoint" },
+      "set_umidita_invernale": { "name": "Winter Humidity Setpoint" },
+      "diff_umidita": { "name": "Humidity Differential" },
+      "vel_rinnovo": { "name": "Supply Speed (1-3)" },
+      "vel_espulsione": { "name": "Exhaust Speed (1-3)" },
+      "vel_rinnovo_deu": { "name": "Dehumidification Supply Speed (1-3)" },
+      "ora_start_fascia_1": { "name": "Slot 1 Start Hour" },
+      "ora_stop_fascia_1": { "name": "Slot 1 Stop Hour" },
+      "ora_start_fascia_2": { "name": "Slot 2 Start Hour" },
+      "ora_stop_fascia_2": { "name": "Slot 2 Stop Hour" },
+      "ora_start_fascia_3": { "name": "Slot 3 Start Hour" },
+      "ora_stop_fascia_3": { "name": "Slot 3 Stop Hour" }
+    },
+    "switch": {
+      "power": { "name": "Unit Power (On/Off)" },
+      "estate_inverno": { "name": "Summer / Winter Mode (ON=Summer, OFF=Winter)" },
+      "regolazione_fasce": { "name": "Time Schedule Enable" }
+    },
+    "binary_sensor": {
+      "allarme_generale": { "name": "General Alarm" },
+      "di01": { "name": "Digital Input DI01" },
+      "di02": { "name": "Digital Input DI02" },
+      "di03": { "name": "Digital Input DI03" },
+      "di04": { "name": "Digital Input DI04" },
+      "di05": { "name": "Digital Input DI05" },
+      "di06": { "name": "Digital Input DI06" },
+      "di07": { "name": "Digital Input DI07" },
+      "di08": { "name": "Digital Input DI08" },
+      "rl01": { "name": "Relay State RL01" },
+      "rl02": { "name": "Relay State RL02" },
+      "rl03": { "name": "Relay State RL03" },
+      "rl04": { "name": "Relay State RL04" },
+      "rl05": { "name": "Relay State RL05" },
+      "rl06": { "name": "Relay State RL06" },
+      "rl07": { "name": "Relay State RL07" },
+      "rl08": { "name": "Relay State RL08" }
+    }
   }
 }

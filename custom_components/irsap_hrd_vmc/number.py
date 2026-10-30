@@ -261,7 +261,7 @@ class IrsapHrdBaseNumber(CoordinatorEntity[IrsapHrdCoordinator], NumberEntity):
         super().__init__(coordinator)
         self.entry = entry
         self.register = register
-        self._attr_name = name
+        self._attr_translation_key = key
         if icon:
             self._attr_icon = icon
         if entity_category:

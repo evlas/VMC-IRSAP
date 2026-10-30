@@ -119,9 +119,28 @@ class IrsapHrdCoordinator(DataUpdateCoordinator[dict[int, int]]):
             self.client = self._create_client()
 
         if not self.client.connected:
-            connected = await self.client.connect()
+            try:
+                connected = await self.client.connect()
+            except Exception as err:
+                _LOGGER.error(
+                    "Impossibile connettersi al controllore Modbus IRSAP HRD (%s): %s",
+                    self.conn_type,
+                    err,
+                )
+                try:
+                    self.client.close()
+                except Exception:
+                    pass
+                self.client = None
+                return False
+
             if not connected:
                 _LOGGER.error("Impossibile connettersi al controllore Modbus IRSAP HRD (%s)", self.conn_type)
+                try:
+                    self.client.close()
+                except Exception:
+                    pass
+                self.client = None
                 return False
         return True
 
@@ -133,11 +152,11 @@ class IrsapHrdCoordinator(DataUpdateCoordinator[dict[int, int]]):
         try:
             try:
                 response = await self.client.read_holding_registers(
-                    address=address, count=count, slave=self.slave_id
+                    address=address, count=count, device_id=self.slave_id
                 )
             except TypeError:
                 response = await self.client.read_holding_registers(
-                    address=address, count=count, device_id=self.slave_id
+                    address=address, count=count, slave=self.slave_id
                 )
 
             if response is None or response.isError():
@@ -157,13 +176,14 @@ class IrsapHrdCoordinator(DataUpdateCoordinator[dict[int, int]]):
             new_data = dict(self.data)
             connected = await self._async_ensure_connected()
             if not connected:
-                if not self.data:
-                    raise UpdateFailed("Connessione Modbus fallita")
-                return self.data
+                raise UpdateFailed("Connessione Modbus fallita")
+
+            any_read_ok = False
 
             # 1. Sonde di temperatura e ambiente (0x2000..0x2006, 7 registri)
             sonde = await self._read_registers(0x2000, 7)
             if sonde and len(sonde) >= 7:
+                any_read_ok = True
                 for idx, val in enumerate(sonde):
                     new_data[0x2000 + idx] = val
             else:
@@ -171,35 +191,42 @@ class IrsapHrdCoordinator(DataUpdateCoordinator[dict[int, int]]):
                 for reg in (REG_TEMP_RIPRESA, REG_TEMP_IMMISSIONE, REG_TEMP_ESPULSIONE, REG_UMIDITA_RIPRESA):
                     val = await self._read_registers(reg, 1)
                     if val:
+                        any_read_ok = True
                         new_data[reg] = val[0]
 
             # 2. Allarme generale (0x2013)
             allarme = await self._read_registers(REG_ALLARME_GENERALE, 1)
             if allarme:
+                any_read_ok = True
                 new_data[REG_ALLARME_GENERALE] = allarme[0]
 
             # 3. Differenziali e Estate/Inverno (0x2023..0x2027)
             diffs = await self._read_registers(0x2023, 5)
             if diffs and len(diffs) >= 5:
+                any_read_ok = True
                 new_data[REG_DIFF_REGOLAZIONE] = diffs[0]
                 new_data[REG_DIFF_UMIDITA] = diffs[1]
                 new_data[REG_ESTATE_INVERNO] = diffs[4]
             else:
                 val = await self._read_registers(REG_ESTATE_INVERNO, 1)
                 if val:
+                    any_read_ok = True
                     new_data[REG_ESTATE_INVERNO] = val[0]
                 val = await self._read_registers(REG_DIFF_REGOLAZIONE, 1)
                 if val:
+                    any_read_ok = True
                     new_data[REG_DIFF_REGOLAZIONE] = val[0]
 
             # 4. On / Off (0x2035)
             on_off = await self._read_registers(REG_ON_OFF, 1)
             if on_off:
+                any_read_ok = True
                 new_data[REG_ON_OFF] = on_off[0]
 
             # 5. Velocità e Setpoint (0x2043..0x2055, 19 registri)
             setpoints = await self._read_registers(0x2043, 19)
             if setpoints and len(setpoints) >= 19:
+                any_read_ok = True
                 for idx, val in enumerate(setpoints):
                     new_data[0x2043 + idx] = val
             else:
@@ -214,7 +241,11 @@ class IrsapHrdCoordinator(DataUpdateCoordinator[dict[int, int]]):
                 ):
                     val = await self._read_registers(reg, 1)
                     if val:
+                        any_read_ok = True
                         new_data[reg] = val[0]
+
+            if not any_read_ok:
+                raise UpdateFailed("Nessuna risposta Modbus dall'unità IRSAP HRD")
 
             # 6. Sonda Aria Esterna (0x4500)
             aria_est = await self._read_registers(REG_TEMP_ARIA_ESTERNA, 1)
@@ -262,11 +293,11 @@ class IrsapHrdCoordinator(DataUpdateCoordinator[dict[int, int]]):
             try:
                 try:
                     response = await self.client.write_register(
-                        address=address, value=value, slave=self.slave_id
+                        address=address, value=value, device_id=self.slave_id
                     )
                 except TypeError:
                     response = await self.client.write_register(
-                        address=address, value=value, device_id=self.slave_id
+                        address=address, value=value, slave=self.slave_id
                     )
 
                 if response is None or response.isError():

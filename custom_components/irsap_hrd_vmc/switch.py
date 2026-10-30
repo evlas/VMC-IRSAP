@@ -82,7 +82,7 @@ class IrsapHrdSwitch(CoordinatorEntity[IrsapHrdCoordinator], SwitchEntity):
         super().__init__(coordinator)
         self.entry = entry
         self.register = register
-        self._attr_name = name
+        self._attr_translation_key = key
         self._attr_icon = icon
         if device_class:
             self._attr_device_class = device_class

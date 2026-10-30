@@ -71,11 +71,7 @@ class IrsapHrdFan(CoordinatorEntity[IrsapHrdCoordinator], FanEntity):
     """Rappresenta una ventola dell'unità VMC IRSAP HRD."""
 
     _attr_has_entity_name = True
-    _attr_supported_features = (
-        FanEntityFeature.SET_SPEED
-        | FanEntityFeature.TURN_ON
-        | FanEntityFeature.TURN_OFF
-    )
+    _attr_supported_features = FanEntityFeature.SET_SPEED
 
     def __init__(
         self,
@@ -90,7 +86,7 @@ class IrsapHrdFan(CoordinatorEntity[IrsapHrdCoordinator], FanEntity):
         super().__init__(coordinator)
         self.entry = entry
         self.key = key
-        self._attr_name = name
+        self._attr_translation_key = key
         self._speed_register = speed_register
         self._attr_icon = icon
         self._attr_unique_id = f"{entry.entry_id}_fan_{key}"
